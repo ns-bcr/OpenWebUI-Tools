@@ -90,7 +90,9 @@ class Tools:
                 "Consulter les instructions de setup dans le header du fichier."
             )
 
-        async with httpx.AsyncClient(timeout=self.valves.REQUEST_TIMEOUT) as client:
+        async with httpx.AsyncClient(
+            timeout=httpx.Timeout(self.valves.REQUEST_TIMEOUT)
+        ) as client:
             resp = await client.post(
                 GOOGLE_TOKEN_URL,
                 data={
@@ -132,7 +134,9 @@ class Tools:
         url = f"{GMAIL_BASE}{path}"
         clean_params = {k: v for k, v in (params or {}).items() if v is not None}
 
-        async with httpx.AsyncClient(timeout=self.valves.REQUEST_TIMEOUT) as client:
+        async with httpx.AsyncClient(
+            timeout=httpx.Timeout(self.valves.REQUEST_TIMEOUT)
+        ) as client:
             resp = await client.request(
                 method,
                 url,
@@ -373,7 +377,9 @@ class Tools:
 
         results = []
         token = await self._get_token()
-        async with httpx.AsyncClient(timeout=self.valves.REQUEST_TIMEOUT) as client:
+        async with httpx.AsyncClient(
+            timeout=httpx.Timeout(self.valves.REQUEST_TIMEOUT)
+        ) as client:
             for m in messages:
                 try:
                     resp = await client.get(
@@ -444,7 +450,9 @@ class Tools:
 
         results = []
         token = await self._get_token()
-        async with httpx.AsyncClient(timeout=self.valves.REQUEST_TIMEOUT) as client:
+        async with httpx.AsyncClient(
+            timeout=httpx.Timeout(self.valves.REQUEST_TIMEOUT)
+        ) as client:
             for m in messages:
                 try:
                     resp = await client.get(
