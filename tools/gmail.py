@@ -210,10 +210,14 @@ class Tools:
     def _get_header(self, headers: list, name: str) -> str:
         """Recupere un header par nom (insensible a la casse)."""
         name_lower = name.lower()
-        for h in headers:
-            if h.get("name", "").lower() == name_lower:
-                return h.get("value", "")
-        return ""
+        return next(
+            (
+                h.get("value", "")
+                for h in headers
+                if h.get("name", "").lower() == name_lower
+            ),
+            "",
+        )
 
     def _format_message(self, msg: dict, full_body: bool = False) -> str:
         """Formate un message Gmail en texte lisible pour le LLM."""
